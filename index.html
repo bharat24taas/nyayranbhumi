@@ -1,9 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="mr">
 <head>
-    <title>Nyay Ranbhumi E-Paper</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>न्याय रणभूमी ई-पेपर (Nyay Ranbhumi E-Paper)</title>
+    
+    <!-- मोबाईलवर स्मूथ स्क्रोल आणि झूम होण्यासाठी Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        html, body, #image-map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
-    <h1>Nyay Ranbhumi E-Paper लवकरच येत आहे...</h1>
+
+    <!-- ई-पेपर दिसण्यासाठी मुख्य जागा -->
+    <div id="image-map"></div>
+
+    <!-- Leaflet JavaScript Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // १. ई-पेपरचा नकाशा/कॅनव्हास तयार करणे
+        var map = L.map('image-map', {
+            minZoom: -2,
+            maxZoom: 2,
+            center: [0, 0],
+            zoom: -1,
+            crs: L.CRS.Simple
+        });
+
+        // २. तुमच्या ई-पेपरच्या पानाचा फोटो (सध्या आपण टेस्ट इमेज वापरत आहोत)
+        var imageUrl = 'https://picsum.photos/1200/1800'; 
+        var imageBounds = [[0, 0], [1800, 1200]]; // फोटोची उंची आणि रुंदी
+
+        L.imageOverlay(imageUrl, imageBounds).addTo(map);
+        map.fitBounds(imageBounds);
+
+        // ३. बातमी मॅपिंगचे उदाहरण (कोऑर्डिनेट्स)
+        // पहिल्या बातमीचा चौकटीचा भाग (Y, X)
+        var newsArea1 = L.rectangle([[1200, 100], [1600, 600]], {
+            color: "#3388ff", 
+            weight: 1, 
+            fillOpacity: 0.1
+        }).addTo(map);
+
+        // बातमीवर क्लिक केल्यावर उघडणारा पॉपअप
+        newsArea1.bindPopup("<b>मुख्य बातमी:</b><br>न्याय रणभूमी डिजिटल ई-पेपरमध्ये आपले स्वागत आहे! सविस्तर वृत्त लवकरच...");
+    </script>
+
 </body>
 </html>
